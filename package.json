@@ -1,0 +1,11 @@
+{
+	"name": "customer_manager",
+	"version": "1.0.0",
+	"description": "Customer management app",
+	"dependencies": {
+		"express": "*",
+		"body-parser": "*",
+		"mongojs": "*"
+	},
+	"author":"Martin"
+}
