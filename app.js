@@ -8,15 +8,14 @@ var db = mongojs('clientkeeper', ['clients']);
 app.use(express.static(__dirname+ '/public'));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res){
-	console.log('Request for clients recieved...');
+app.get('/clients', function(){
+  var id = req.params.id;
 
-	db.clients.find(function(err, docs){
+	db.clients.findOne({_id: mongojs.ObjectId(id)}, function(err, doc){
 		if(err){
 			res.send(err);
 		} else {
-			console.log('Sending Data...');
-			res.json(docs);
+			res.json(doc);
 		}
 	});
 });
@@ -34,13 +33,25 @@ app.post('/clients', function(){
 	});
 });
 
-app.get('/clients', function(){
-  var id = req.params.id;
+app.get('/clients/:id', function(req, res){
+	var id = req.params.id;
 
 	db.clients.findOne({_id: mongojs.ObjectId(id)}, function(err, doc){
 		if(err){
 			res.send(err);
 		} else {
+			res.json(doc);
+		}
+	})
+});
+
+app.delete('/clients/:id', function(req, res){
+	var id = req.params.id;
+	db.clients.remove({_id: mongojs.ObjectId(id)}, function(err, doc){
+		if(err){
+			res.send(err);
+		} else {
+			console.log('Client Removed');
 			res.json(doc);
 		}
 	});
