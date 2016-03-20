@@ -14,4 +14,25 @@ myApp.controller('AppController', ['$scope', '$http', '$location', function($sco
 		});
 	}
   
+  $scope.editClient = function(id){
+		$'#addBtn').remove();
+		$http.get('/clients/'+id).success(function(response){
+			$scope.client = response;
+		});
+	}
+  
+  $scope.updateClient = function(){
+		$http.put('/clients/'+ $scope.client._id, $scope.client).success(function(response){
+			console.log('Client Updated...');
+			window.location.href='/';
+		});
+	}
+  
+  $scope.deleteClient = function(id){
+		$http.delete('/clients/'+id).success(function(response){
+			console.log('Client Removed');
+			window.location.href='/';
+		});
+	}
+  
 }])
